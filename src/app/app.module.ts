@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { InspectoresComponent } from './pages/empleados/inspectores/inspectores.component';
 import { GerentesComponent } from './pages/empleados/gerentes/gerentes.component';
 import { AutomovilesComponent } from './pages/vehiculos/automoviles/automoviles.component';
+import { AutomovilesFormComponent } from './pages/vehiculos/automoviles/automoviles-form/automoviles-form.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AutomovilesComponent } from './pages/vehiculos/automoviles/automoviles.
     PropietariosComponent,
     InspectoresComponent,
     GerentesComponent,
-    AutomovilesComponent
+    AutomovilesComponent,
+    AutomovilesFormComponent
   ],
   imports: [
     BrowserModule,

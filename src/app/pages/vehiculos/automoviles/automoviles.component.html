@@ -1,1 +1,72 @@
-<p>automoviles works!</p>
+<h2 class="text-center fw-bold">Automóviles</h2>
+
+
+<button type="button" class="btn btn-primary m-2"  [routerLink]="['/automoviles/crear']">
+    Crear automóvil
+  </button>
+
+<table class="table table-striped m-2">
+    <thead>
+        <tr>
+          <th scope="col">Dominio</th>
+          <th scope="col">Propietario</th>
+          <th scope="col">Número de motor</th>
+          <th scope="col">Número de chasis</th>   
+          <th scope="col">Marca</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Versión</th>
+          <th scope="col">Chofer</th>             
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehiculo of vehiculos">
+            <td>{{vehiculo.dominio}}</td>
+            <td>{{vehiculo.propietario.apellido}} {{vehiculo.propietario.nombre}}, dni: {{vehiculo.propietario.dni}}</td>
+            <td>{{vehiculo.numeroMotor}}</td>
+            <td>{{vehiculo.numeroChasis}}</td>         
+            <td>{{vehiculo.marca}}</td>
+            <td>{{vehiculo.modelo}}</td>
+            <td>{{vehiculo.version}}</td>
+            <td>
+                <div *ngIf="vehiculo.chofer != null; else elseBlock">
+                    {{vehiculo.chofer.apellido}} {{vehiculo.chofer.nombre}}, dni: {{vehiculo.chofer.dni}}
+                </div>
+                <ng-template #elseBlock> ------- </ng-template>  
+            </td>          
+            <td>
+                <button type="button" class="btn btn-primary" [routerLink]="['/automoviles/editar']" [queryParams]="{ dominio: vehiculo.dominio }">
+                    Editar
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="modalEliminar(vehiculo)">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+      </tbody>
+</table>
+
+
+
+<!-- Modal Eliminar Chofer-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">Esta seguro que quiere eliminar al vehiculo dominio {{vehiculoSelec.dominio}} </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Una vez eliminadx no podra recuperar los datos de este vehiculo
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" (click)="onEliminar()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

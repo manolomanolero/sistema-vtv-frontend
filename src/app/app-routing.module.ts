@@ -5,6 +5,8 @@ import { PropietariosComponent } from './pages/clientes/propietarios/propietario
 import { GerentesComponent } from './pages/empleados/gerentes/gerentes.component';
 import { InspectoresComponent } from './pages/empleados/inspectores/inspectores.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AutomovilesFormComponent } from './pages/vehiculos/automoviles/automoviles-form/automoviles-form.component';
+import { AutomovilesComponent } from './pages/vehiculos/automoviles/automoviles.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,21 @@ const routes: Routes = [
     path: 'gerentes',
     component: GerentesComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'automoviles',
+    component: AutomovilesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'automoviles/crear',
+    component: AutomovilesFormComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'automoviles/editar',
+    component: AutomovilesFormComponent,
+    pathMatch: 'prefix',
   },
 ];
 
