@@ -1,0 +1,127 @@
+<h2 class="text-center fw-bold">Propietarios</h2>
+
+
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#propietarioModal" (click)="onCrear()">
+    Crear propietario
+  </button>
+
+<table class="table table-striped m-2">
+    <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Cuit</th>
+          <th scope="col">¿Está exento?</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let propietario of propietarios">
+            <td>{{propietario.nombre}}</td>
+            <td>{{propietario.apellido}}</td>
+            <td>{{propietario.dni}}</td>
+            <td>{{propietario.cuit}}</td>
+            <td>
+              <div *ngIf="propietario.cuit > 0; else elseBlock">Si</div>
+              <ng-template #elseBlock>No</ng-template>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#propietarioModal" (click)="onEditar(propietario)">
+                    Editar
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="modalEliminar(propietario)">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+      </tbody>
+</table>
+
+
+
+<!-- Modal Eliminar Chofer-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">Esta seguro que quiere eliminar a {{propietarioSelec.nombre}} {{propietarioSelec.apellido}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Una vez eliminadx no podra recuperar los datos de este cliente
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" (click)="onEliminar()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal agregar/editar Chofer-->
+<div class="modal fade" id="propietarioModal" tabindex="-1" aria-labelledby="propietarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div *ngIf="modoEdicion; else elseBlock">
+            <h1 class="modal-title fs-5" id="propietarioEditModalLabel">Está editando a {{propietarioSelec.nombre}} {{propietarioSelec.apellido}}</h1>
+          </div>
+          <ng-template #elseBlock>
+            <h1 class="modal-title fs-5" id="choferModalLabel">Está creando un nuevo propietario</h1>
+          </ng-template>
+          
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form (ngSubmit) = "formSubmit()">
+        <div class="modal-body">            
+            <label for="dniInput" class="form-label">Dni</label>
+            <input type="number" id="dniInput" class="form-control" [(ngModel)]="propietarioSelec.dni" [ngModelOptions]="{standalone: true}" 
+            [disabled]="modoEdicion" aria-describedby="dniHelpBlock">
+            <div id="dniHelpBlock" class="form-text">
+              El dni tiene que conter solo números y estar entre el rango válido. No puede ser editado
+            </div>
+            <br>
+
+            <label for="nombreInput" class="form-label">Nombre</label>
+            <input type="text" id="nombreInput" class="form-control" [(ngModel)]="propietarioSelec.nombre"  [ngModelOptions]="{standalone: true}" aria-describedby="nombreHelpBlock">
+            <div id="nombreHelpBlock" class="form-text">
+                El nombre no puede ser vacío
+            </div>
+            <br>
+
+            <label for="nombreInput" class="form-label">Apellido</label>
+            <input type="text" id="apellidoInput" [(ngModel)]="propietarioSelec.apellido" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="apellidoHelpBlock">
+            <div id="dniHelpBlock" class="form-text">
+                El apellido no puede ser vacío
+            </div>
+            <br>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="exentoCheckbox" 
+              [checked]="propietarioSelec.estaExento === true" (change)="onChangeExento()">
+              <label class="form-check-label" for="exentoCheckbox">¿Está exento?</label>
+            </div>
+            
+            
+            <div style="display:none;" id="cuitControlForm">
+              <label for="cuitInput" class="form-label">Cuit</label>
+              <input type="text" id="cedulaInput" [(ngModel)]="propietarioSelec.cuit" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="cuitHelpBlock">
+              <div id="cuitHelpBlock" class="form-text">
+                  El cuit debe ser válido
+              </div>
+            </div>
+            <br><br><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>    
+                        
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

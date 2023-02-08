@@ -1,0 +1,104 @@
+<h2 class="text-center fw-bold">Choferes</h2>
+
+
+<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#choferModal" (click)="onCrear()">
+    Crear chofer
+  </button>
+
+<table class="table table-striped m-2">
+    <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Cedula Azul</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chofer of choferes">
+            <td>{{chofer.nombre}}</td>
+            <td>{{chofer.apellido}}</td>
+            <td>{{chofer.dni}}</td>
+            <td>{{chofer.cedulaAzul}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#choferModal" (click)="onEditar(chofer)">
+                    Editar
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="modalEliminar(chofer)">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+      </tbody>
+</table>
+
+
+
+<!-- Modal Eliminar Chofer-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">Esta seguro que quiere eliminar a {{choferSeleccionado.nombre}} {{choferSeleccionado.apellido}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Una vez eliminadx no podra recuperar los datos de este cliente
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" (click)="onEliminar()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal agregar/editar Chofer-->
+<div class="modal fade" id="choferModal" tabindex="-1" aria-labelledby="choferModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="choferModalLabel">Esta seguro que quiere eliminar a {{choferSeleccionado.nombre}} {{choferSeleccionado.apellido}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form (ngSubmit) = "formSubmit()">
+        <div class="modal-body">            
+            <label for="dniInput" class="form-label">Dni</label>
+            <input type="number" id="dniInput" class="form-control" [(ngModel)]="choferSeleccionado.dni" [ngModelOptions]="{standalone: true}" 
+            [disabled]="modoEdicion" aria-describedby="dniHelpBlock">
+            <div id="dniHelpBlock" class="form-text">
+              El dni tiene que conter solo números y estar entre el rango válido. No puede ser editado
+            </div>
+
+            <label for="nombreInput" class="form-label">Nombre</label>
+            <input type="text" id="nombreInput" class="form-control" [(ngModel)]="choferSeleccionado.nombre"  [ngModelOptions]="{standalone: true}" aria-describedby="nombreHelpBlock">
+            <div id="nombreHelpBlock" class="form-text">
+                El nombre no puede ser vacío
+            </div>
+
+            <label for="nombreInput" class="form-label">Apellido</label>
+            <input type="text" id="apellidoInput" [(ngModel)]="choferSeleccionado.apellido" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="apellidoHelpBlock">
+            <div id="dniHelpBlock" class="form-text">
+                El apellido no puede ser vacío
+            </div>
+
+            <label for="cedulaInput" class="form-label">Cédula Azul</label>
+            <input type="text" id="cedulaInput" [(ngModel)]="choferSeleccionado.cedulaAzul" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="cedulaHelpBlock">
+            <div id="cedulaHelpBlock" class="form-text">
+                La cédula Azul debe ser válida
+            </div>
+            <br><br><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>    
+                        
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
